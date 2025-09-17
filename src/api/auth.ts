@@ -1,5 +1,16 @@
 import api from "./client";
 
+export interface User {
+  id: string;
+  employeeId: string;
+  name: string;
+  department?: string;
+  role: "user" | "admin";
+  lastLogin?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export type LoginPayload = { employeeId: string; password: string };
 export type RegisterPayload = {
   employeeId: string;
@@ -38,7 +49,16 @@ export async function register(payload: RegisterPayload) {
   return data;
 }
 
-export async function me() {
+export async function me(): Promise<User> {
   const { data } = await api.get("/auth/me");
   return data;
+}
+
+export async function updateProfile(data: {
+  name?: string;
+  department?: string;
+  role?: string;
+}): Promise<User> {
+  const { data: updated } = await api.put("/auth/me", data);
+  return updated;
 }

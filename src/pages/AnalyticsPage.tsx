@@ -13,7 +13,7 @@ import {
   Legend,
 } from "recharts";
 
-export default function Analytics() {
+export default function AnalyticsPage() {
   const [kpis, setKpis] = useState<any>(null);
   const [dept, setDept] = useState<any[]>([]);
   const [ts, setTs] = useState<any[]>([]);
@@ -30,12 +30,10 @@ export default function Analytics() {
 
   const loadDept = async () => {
     const data = await getSalesByDept(range);
-    // 기대 포맷: [{ department: '마케팅', sales: 123 }, ...]
     setDept(data || []);
   };
   const loadTs = async () => {
     const data = await getTimeseries({ metric: "sales", ...range });
-    // 기대 포맷: [{ date: '2025-09-01', value: 100 }, ...]
     setTs(data || []);
   };
 
